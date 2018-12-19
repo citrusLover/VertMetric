@@ -26,30 +26,35 @@ def avg_word_count(lst):
     """
     return float(np.mean(list(map(lambda s: len(s.split()), lst))))
 
-def verify_data(generated, targets):
+def verify_data(*lists):
     """
     Throws an error if the generated and/or targets lists are
         incorrect for comparison.
     Returns:
         None
     """
+    if len(lists) == 0:
+        return 
+
     try:
-        assert isinstance(generated, list)
-        assert isinstance(targets, list)
+        for l in lists[1:]:
+            assert isinstance(l, list)
     except AssertionError as err:
         logger = logging.getLogger('vert')
         logger.exception("both 'generated' and 'targets' must be of type 'list'.")
         raise err
 
     try:
-        assert len(generated) == len(targets)
+        length = len(l[0])
+        for l in lists[1:]:
+            assert len(l) == length
     except AssertionError as err:
         logger = logging.getLogger('vert')
         logger.exception("Unequal number of summaries in generated vs target files.")
         raise err
 
     try:
-        assert len(generated) > 0
+        assert len(l[0]) > 0
     except AssertionError as err:
         logger = logging.getLogger('vert')
         logger.exception("0 summaries being compared.")

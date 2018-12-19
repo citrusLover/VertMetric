@@ -61,3 +61,4 @@ class Rouge(metric.Metric):
         if filename == '':
             filename = gen.generate_filename('rouge')
         super(Rouge, cls).save_report_to_file(report, out_dir, filename)
+
